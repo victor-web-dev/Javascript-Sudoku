@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sudoku</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100dvh;
+      }
+      .table {
+        width: 500px;
+        border-spacing: 0;
+        border-collapse: collapse;
+      }
+
+      .input {
+        width: 100%;
+        height: 100%;
+        font-size: larger;
+        text-align: center;
+        border: 0.5px solid black;
+      }
+
+      .input:focus {
+        outline: none;
+      }
+
+      tbody {
+        border: 2px solid black;
+        border-collapse: collapse;
+      }
+
+      td {
+        height: 50px;
+        width: 50px;
+      }
+
+      .line {
+        border: 2px solid black;
+      }
+      .lineI {
+        border-bottom: 2px solid black;
+      }
+      .lineY {
+        border-right: 2px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <main></main>
+  </body>
+  <script>
+    const createElement = (tag) => document.createElement(tag);
+
+    const createSudokuTable = () => {
+      const table = createElement("table");
+      table.setAttribute("cellspacing", "0");
+      table.setAttribute("cellpadding", "0");
+      const tbody = createElement("tbody");
+
+      for (let i = 1; i <= 9; i++) {
+        let tableRow = createElement("tr");
+
+        for (let j = 1; j <= 9; j++) {
+          let tableData = createElement("td");
+          let input = createElement("input");
+          input.type = "text";
+          input.classList.add("input");
+          input.id = `${i}${j}`;
+          if (j % 3 === 0) input.classList.add("lineY");
+          if (i % 3 === 0) input.classList.add("lineI");
+          tableData.append(input);
+          tableRow.append(tableData);
+        }
+
+        tbody.append(tableRow);
+      }
+      table.classList.add("table");
+      table.append(tbody);
+      document.querySelector("main").appendChild(table);
+    };
+
+    const exec = () => {
+      createSudokuTable();
+    };
+
+    exec();
+  </script>
+</html>
