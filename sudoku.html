@@ -20,6 +20,7 @@
         width: 500px;
         border-spacing: 0;
         border-collapse: collapse;
+        caption-side: bottom;
       }
 
       .input {
@@ -39,7 +40,7 @@
         border-collapse: collapse;
       }
 
-      td {
+      tbody td {
         height: 50px;
         width: 50px;
       }
@@ -52,6 +53,10 @@
       }
       .lineY {
         border-right: 2px solid black;
+      }
+
+      .p-1 {
+        padding: 1rem;
       }
     </style>
   </head>
@@ -80,10 +85,33 @@
     };
 
     const createSudokuTable = () => {
+      //Create Table
       const table = createElement("table");
       table.setAttribute("cellspacing", "0");
       table.setAttribute("cellpadding", "0");
-      const tbody = createElement("tbody");
+
+      //Create Table Caption
+      const tCaption = createElement("caption");
+      tCaption.innerText = "Sudoku";
+
+      //Create Table Header
+      const tHead = createElement("thead");
+      const tHeader = createElement("th");
+      const tHeadRow = createElement("tr");
+      const tHeaderBtn = createElement("button");
+      tHeaderBtn.innerText = "Fill Up Numbers";
+
+      tHeader.setAttribute("colspan", 3);
+      tHeader.classList.add("p-1");
+
+      tHeaderBtn.classList.add("p-1");
+
+      tHeader.append(tHeaderBtn);
+      tHeadRow.append(tHeader);
+      tHead.append(tHeadRow);
+
+      //Create Table body and inputs
+      const tBody = createElement("tbody");
 
       for (let i = 1; i <= 9; i++) {
         let tableRow = createElement("tr");
@@ -104,10 +132,10 @@
           tableRow.append(tableData);
         }
 
-        tbody.append(tableRow);
+        tBody.append(tableRow);
       }
       table.classList.add("table");
-      table.append(tbody);
+      table.append(tCaption, tHead, tBody);
       document.querySelector("main").appendChild(table);
     };
 
