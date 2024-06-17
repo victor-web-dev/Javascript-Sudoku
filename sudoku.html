@@ -61,6 +61,24 @@
   <script>
     const createElement = (tag) => document.createElement(tag);
 
+    const validNumber = (event) => {
+      event.preventDefault();
+      const { keyCode, key, target } = event;
+      if (keyCode >= 48 && keyCode <= 57) return (target.value = key);
+    };
+
+    const tabHandler = (event) => {
+      const { keyCode, target } = event;
+      const {
+        parentElement: { nextSibling, parentElement },
+      } = target;
+      if (keyCode == 9 && nextSibling) {
+        return nextSibling.firstChild.focus();
+      } else if (!nextSibling && !!parentElement.nextSibling) {
+        return parentElement.nextSibling.firstChild.firstChild.focus();
+      }
+    };
+
     const createSudokuTable = () => {
       const table = createElement("table");
       table.setAttribute("cellspacing", "0");
@@ -76,6 +94,10 @@
           input.type = "text";
           input.classList.add("input");
           input.id = `${i}${j}`;
+          input.placeholder = "0";
+          input.value = 0;
+          input.addEventListener("keydown", validNumber);
+          input.addEventListener("keydown", tabHandler);
           if (j % 3 === 0) input.classList.add("lineY");
           if (i % 3 === 0) input.classList.add("lineI");
           tableData.append(input);
