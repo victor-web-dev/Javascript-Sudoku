@@ -58,13 +58,21 @@
       .p-1 {
         padding: 1rem;
       }
+
+      .duplicate {
+        background-color: red !important;
+      }
+      .warning {
+        color: red;
+        display: none;
+        font-size: 30px;
+      }
     </style>
   </head>
   <body>
-    <main></main>
+    <main>
+      <h3 class="warning">Number is duplicated</h3>
+    </main>
   </body>
-  <script type="module">
-    import { exec } from "./sudoku.js";
-    exec();
-  </script>
+  <script type="module" src="./sudoku.js"></script>
 </html>
