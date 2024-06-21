@@ -2,13 +2,17 @@ const getBlockIndex = (i, j) => {
   return Math.floor((i - 1) / 3) * 3 + Math.floor((j - 1) / 3);
 };
 
-
 function isValid(board, row, col, num) {
   // Check if 'num' is not in current row, current column and current 3x3 sub-box
   for (let x = 0; x < 9; x++) {
-    if (board[row][x] == num ||   //check duplicated in row
-      board[x][col] == num ||   //check duplicated in column
-        board[3 * Math.floor(row / 3) + Math.floor(x / 3)][3 * Math.floor(col / 3) + x % 3] == num) {   //check duplicated in block
+    if (
+      board[row][x] == num || //check duplicated in row
+      board[x][col] == num || //check duplicated in column
+      board[3 * Math.floor(row / 3) + Math.floor(x / 3)][
+        3 * Math.floor(col / 3) + (x % 3)
+      ] == num
+    ) {
+      //check duplicated in block
       return false;
     }
   }
@@ -18,9 +22,10 @@ function isValid(board, row, col, num) {
 function fillBoard(board) {
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
-      if (board[row][col] == 0) {   //if it is filled 0
+      if (board[row][col] == 0) {
+        //if it is filled 0
         // let nums = shuffleArray([...Array(9).keys()].map(n => n + 1)); // Shuffle numbers 1 to 9
-        let nums = [1,2,3,4,5,6,7,8,9]
+        let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         nums = shuffleArray(nums);
         for (let num of nums) {
           if (isValid(board, row, col, num)) {
@@ -46,15 +51,12 @@ function shuffleArray(array) {
   return array;
 }
 
-function generateSudoku() {
+export function generateSudoku() {
   let board = Array.from({ length: 9 }, () => Array(9).fill(0));
   fillBoard(board);
   return board;
 }
 
-let arr = generateSudoku();
-
-console.table(arr);
 // // creating the matrix
 // let arr = [];
 // for (let i = 1; i <= 9; i++) {
@@ -64,8 +66,6 @@ console.table(arr);
 //   }
 //   arr.push(array);
 // }
-
-
 
 // get the diagonal from a matrix
 const diagonal = (array) => {
@@ -173,6 +173,10 @@ const getAllBlocks = (array) => {
 // colValues(arr, 8);
 // getBlocksPositions(arr);
 
-block(arr, 0, 1);
+// block(arr, 0, 1);
 
 // getAllBlocks(arr);
+
+let arr = generateSudoku();
+
+console.log(arr);

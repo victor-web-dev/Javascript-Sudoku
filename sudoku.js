@@ -1,3 +1,5 @@
+import { generateSudoku } from "./matrix.js";
+
 const matrix = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -18,7 +20,7 @@ const validNumber = (event) => {
   const { keyCode, key, target } = event;
   if (keyCode >= 48 && keyCode <= 57) return (target.value = key); // numbers 0 - 9
   if (keyCode == 8) return (target.value = ""); // backspace
-  console.log(errorFlag)
+  console.log(errorFlag);
 };
 
 // handle Tab button
@@ -43,6 +45,17 @@ const handleChangeInputValue = (event) => {
   console.log(matrix);
 };
 
+const solveSudoku = (event) => {
+  const arr = generateSudoku();
+
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length; j++) {
+      const input = document.getElementById(`${i}${j}`);
+      input.value = arr[i][j];
+    }
+  }
+};
+
 const createSudokuTable = () => {
   //Create Table
   const table = createElement("table");
@@ -64,7 +77,7 @@ const createSudokuTable = () => {
   tHeader.classList.add("p-1");
 
   tHeaderBtn.classList.add("p-1");
-  tHeaderBtn.addEventListener("click", () => {});
+  tHeaderBtn.addEventListener("click", solveSudoku);
 
   tHeader.append(tHeaderBtn);
   tHeadRow.append(tHeader);
@@ -136,7 +149,7 @@ const checkDuplicate = (id, rowCheckingArray, blockcheckingArray) => {
           selectNum = inputValue;
           let duplicateFlag = false;
           checkArray(rowCheckingArray);
-          checkArray(blockcheckingArray)
+          checkArray(blockcheckingArray);
 
           if (duplicateFlag) {
             //if digit is duplicated
@@ -146,7 +159,6 @@ const checkDuplicate = (id, rowCheckingArray, blockcheckingArray) => {
               //show 1s then hide
               document.querySelector(".warning").style.display = "none";
             }, 1000);
-
           } else {
             //if it is a first digit
             rowCheckingArray.push(inputValue);
@@ -179,7 +191,7 @@ const checkArray = (Array) => {
       break;
     }
   }
-}
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   //DOMContentLoaded is to execute after loading HTML
