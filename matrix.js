@@ -2,7 +2,6 @@ const getBlockIndex = (i, j) => {
   return Math.floor((i - 1) / 3) * 3 + Math.floor((j - 1) / 3);
 };
 
-
 const isValid = (board, row, col, num) => {
   // Check if 'num' is not in current row, current column and current 3x3 sub-box
   for (let x = 0; x < 9; x++) { //error condition
@@ -174,11 +173,4 @@ const getAllBlocks = (array) => {
 // getAllBlocks(arr);
 
 let arr = generateSudoku();
-
 console.log(arr);
-
-
-
-let arr = generateSudoku();
-console.table(arr);
-block(arr, 0, 1);
