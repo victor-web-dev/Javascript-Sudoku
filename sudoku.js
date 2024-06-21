@@ -1,3 +1,15 @@
+const matrix = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+];
+
 const createElement = (tag) => document.createElement(tag);
 
 // validate keyboard numbers
@@ -16,9 +28,18 @@ const tabHandler = (event) => {
   } = target;
   if (keyCode == 9 && nextSibling) {
     return nextSibling.firstChild.focus();
-  } else if (!nextSibling && !!parentElement.nextSibling) {
+  } else if (!nextSibling && parentElement.nextSibling) {
     return parentElement.nextSibling.firstChild.firstChild.focus();
   }
+};
+
+const handleChangeInputValue = (event) => {
+  const { target, keyCode } = event;
+  if (keyCode == 8 || keyCode == 9) return;
+  const row = target.id.charAt(0);
+  const col = target.id.charAt(1);
+  matrix[row][col] = parseInt(target.value);
+  console.log(matrix);
 };
 
 const createSudokuTable = () => {
@@ -42,6 +63,7 @@ const createSudokuTable = () => {
   tHeader.classList.add("p-1");
 
   tHeaderBtn.classList.add("p-1");
+  tHeaderBtn.addEventListener("click", () => {});
 
   tHeader.append(tHeaderBtn);
   tHeadRow.append(tHeader);
@@ -50,10 +72,10 @@ const createSudokuTable = () => {
   //Create Table body and inputs
   const tBody = createElement("tbody");
 
-  for (let i = 1; i <= 9; i++) {
+  for (let i = 0; i < 9; i++) {
     let tableRow = createElement("tr");
 
-    for (let j = 1; j <= 9; j++) {
+    for (let j = 0; j < 9; j++) {
       let tableData = createElement("td");
       let input = createElement("input");
       input.type = "text";
@@ -63,8 +85,9 @@ const createSudokuTable = () => {
       input.value = 0;
       input.addEventListener("keydown", validNumber);
       input.addEventListener("keydown", tabHandler);
-      if (j % 3 === 0) input.classList.add("lineY");
-      if (i % 3 === 0) input.classList.add("lineI");
+      input.addEventListener("keydown", handleChangeInputValue);
+      if ((j + 1) % 3 === 0) input.classList.add("lineY");
+      if ((i + 1) % 3 === 0) input.classList.add("lineI");
       tableData.append(input);
       tableRow.append(tableData);
     }
