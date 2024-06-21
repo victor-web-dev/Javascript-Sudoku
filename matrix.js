@@ -3,9 +3,9 @@ const getBlockIndex = (i, j) => {
 };
 
 
-function isValid(board, row, col, num) {
+const isValid = (board, row, col, num) => {
   // Check if 'num' is not in current row, current column and current 3x3 sub-box
-  for (let x = 0; x < 9; x++) {
+  for (let x = 0; x < 9; x++) { //error condition
     if (board[row][x] == num ||   //check duplicated in row
       board[x][col] == num ||   //check duplicated in column
         board[3 * Math.floor(row / 3) + Math.floor(x / 3)][3 * Math.floor(col / 3) + x % 3] == num) {   //check duplicated in block
@@ -15,7 +15,7 @@ function isValid(board, row, col, num) {
   return true;
 }
 
-function fillBoard(board) {
+const fillBoard = (board) => {
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
       if (board[row][col] == 0) {   //if it is filled 0
@@ -38,7 +38,7 @@ function fillBoard(board) {
   return true;
 }
 
-function shuffleArray(array) {
+const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -46,15 +46,12 @@ function shuffleArray(array) {
   return array;
 }
 
-function generateSudoku() {
+const generateSudoku = () => {
   let board = Array.from({ length: 9 }, () => Array(9).fill(0));
   fillBoard(board);
   return board;
 }
 
-let arr = generateSudoku();
-
-console.table(arr);
 // // creating the matrix
 // let arr = [];
 // for (let i = 1; i <= 9; i++) {
@@ -173,6 +170,10 @@ const getAllBlocks = (array) => {
 // colValues(arr, 8);
 // getBlocksPositions(arr);
 
-block(arr, 0, 1);
 
 // getAllBlocks(arr);
+
+
+let arr = generateSudoku();
+console.table(arr);
+block(arr, 0, 1);

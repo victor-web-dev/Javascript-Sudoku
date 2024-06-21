@@ -106,70 +106,70 @@ const getBlockIndex = (i, j) => {
 };
 let selectNum = null;
 let errorFlag = "clear";
-//method to check depulicated
-const checkDuplicate = (id, rowCheckingArray, blockcheckingArray) => {
-  const inputElement = document.getElementById(id);
-  inputElement.addEventListener("input", (event) => {
-    let inputValue = event.target.value; //what filled in input
+// //method to check depulicated
+// const checkDuplicate = (id, rowCheckingArray, blockcheckingArray) => {
+//   const inputElement = document.getElementById(id);
+//   inputElement.addEventListener("input", (event) => {
+//     let inputValue = event.target.value; //what filled in input
 
-    if (inputValue.length > 1) {
-      //if they put more than 2 digits
-      errorFlag = "oneNumber";
-    } else if (/^[1-9]$/.test(inputValue)) {
-      //if it is "1"-"9"  correct
-      errorFlag = "clear";
-    } else {
-      //if they put non-digit char
-      errorFlag = "onlyNumber";
-    }
+//     if (inputValue.length > 1) {
+//       //if they put more than 2 digits
+//       errorFlag = "oneNumber";
+//     } else if (/^[1-9]$/.test(inputValue)) {
+//       //if it is "1"-"9"  correct
+//       errorFlag = "clear";
+//     } else {
+//       //if they put non-digit char
+//       errorFlag = "onlyNumber";
+//     }
 
-    switch (errorFlag) {
-      case "clear": //if it is "1"-"9"  correct
-        inputElement.parentElement.classList.remove("duplicate"); //reset
-        if (selectNum == null) {
-          //first input
-          selectNum = inputValue;
-          rowCheckingArray.push(inputValue);
-          blockcheckingArray.push(inputValue);
-        } else {
-          //after 2nd
-          selectNum = inputValue;
-          let duplicateFlag = false;
-          checkArray(rowCheckingArray);
-          checkArray(blockcheckingArray)
+//     switch (errorFlag) {
+//       case "clear": //if it is "1"-"9"  correct
+//         inputElement.parentElement.classList.remove("duplicate"); //reset
+//         if (selectNum == null) {
+//           //first input
+//           selectNum = inputValue;
+//           rowCheckingArray.push(inputValue);
+//           blockcheckingArray.push(inputValue);
+//         } else {
+//           //after 2nd
+//           selectNum = inputValue;
+//           let duplicateFlag = false;
+//           checkArray(rowCheckingArray);
+//           checkArray(blockcheckingArray)
 
-          if (duplicateFlag) {
-            //if digit is duplicated
-            inputElement.parentElement.classList.add("duplicate"); //give a class
-            document.querySelector(".warning").style.display = "block"; //show warning
-            setTimeout(() => {
-              //show 1s then hide
-              document.querySelector(".warning").style.display = "none";
-            }, 1000);
+//           if (duplicateFlag) {
+//             //if digit is duplicated
+//             inputElement.parentElement.classList.add("duplicate"); //give a class
+//             document.querySelector(".warning").style.display = "block"; //show warning
+//             setTimeout(() => {
+//               //show 1s then hide
+//               document.querySelector(".warning").style.display = "none";
+//             }, 1000);
 
-          } else {
-            //if it is a first digit
-            rowCheckingArray.push(inputValue);
-            blockcheckingArray.push(inputValue);
-            console.log(`Number: ${selectNum} Place: ${id}`);
-            console.log(`Row Array: ${rowCheckingArray}`);
-            console.log(`Block Array: ${blockcheckingArray}`);
-          }
-        }
-        break;
+//           } else {
+//             //if it is a first digit
+//             rowCheckingArray.push(inputValue);
+//             blockcheckingArray.push(inputValue);
+//             console.log(`Number: ${selectNum} Place: ${id}`);
+//             console.log(`Row Array: ${rowCheckingArray}`);
+//             console.log(`Block Array: ${blockcheckingArray}`);
+//           }
+//         }
+//         break;
 
-      case "oneNumber": //if they put more than 2 digits
-        alert("Only One Number");
-        event.preventDefault();
-        break;
+//       case "oneNumber": //if they put more than 2 digits
+//         alert("Only One Number");
+//         event.preventDefault();
+//         break;
 
-      case "onlyNumber": //if they put non-digit char
-        alert("Only Number");
-        event.preventDefault();
-        break;
-    }
-  });
-};
+//       case "onlyNumber": //if they put non-digit char
+//         alert("Only Number");
+//         event.preventDefault();
+//         break;
+//     }
+//   });
+// };
 
 //Method to check number in Array
 const checkArray = (Array) => {
@@ -190,11 +190,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let rowCheckingArray = [];
     for (let j = 1; j <= 9; j++) {
       let blockIndex = getBlockIndex(i, j);
-      checkDuplicate(
-        `${i}${j}`,
-        rowCheckingArray,
-        blockcheckingArrays[blockIndex]
-      );
+      // checkDuplicate(
+      //   `${i}${j}`,
+      //   rowCheckingArray,
+      //   blockcheckingArrays[blockIndex]
+      // );
     }
   }
 });
