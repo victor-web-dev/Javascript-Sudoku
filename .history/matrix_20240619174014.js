@@ -1,3 +1,13 @@
+// // creating the matrix
+// let arr = [];
+// for (let i = 1; i <= 9; i++) {
+//   let array = [];
+//   for (let j = 1; j <= 9; j++) {
+//     array.push(Math.round(Math.random() * 10));
+//   }
+//   arr.push(array);
+// }
+
 const getBlockIndex = (i, j) => {
   return Math.floor((i - 1) / 3) * 3 + Math.floor((j - 1) / 3);
 };
@@ -55,17 +65,6 @@ function generateSudoku() {
 let arr = generateSudoku();
 
 console.table(arr);
-// // creating the matrix
-// let arr = [];
-// for (let i = 1; i <= 9; i++) {
-//   let array = [];
-//   for (let j = 1; j <= 9; j++) {
-//     array.push(Math.round(Math.random() * 10));
-//   }
-//   arr.push(array);
-// }
-
-
 
 // get the diagonal from a matrix
 const diagonal = (array) => {

@@ -1,70 +1,30 @@
-const getBlockIndex = (i, j) => {
-  return Math.floor((i - 1) / 3) * 3 + Math.floor((j - 1) / 3);
-};
-
-
-function isValid(board, row, col, num) {
-  // Check if 'num' is not in current row, current column and current 3x3 sub-box
-  for (let x = 0; x < 9; x++) {
-    if (board[row][x] == num ||   //check duplicated in row
-      board[x][col] == num ||   //check duplicated in column
-        board[3 * Math.floor(row / 3) + Math.floor(x / 3)][3 * Math.floor(col / 3) + x % 3] == num) {   //check duplicated in block
-      return false;
-    }
+// creating the matrix
+let arr = [];
+for (let i = 1; i <= 9; i++) {
+  let array = [];
+  for (let j = 1; j <= 9; j++) {
+    array.push(Math.round(Math.random() * 10));
   }
-  return true;
+  arr.push(array);
 }
 
-function fillBoard(board) {
-  for (let row = 0; row < 9; row++) {
-    for (let col = 0; col < 9; col++) {
-      if (board[row][col] == 0) {   //if it is filled 0
-        // let nums = shuffleArray([...Array(9).keys()].map(n => n + 1)); // Shuffle numbers 1 to 9
-        let nums = [1,2,3,4,5,6,7,8,9]
-        nums = shuffleArray(nums);
-        for (let num of nums) {
-          if (isValid(board, row, col, num)) {
-            board[row][col] = num;
-            if (fillBoard(board)) {
-              return true;
-            }
-            board[row][col] = 0;
-          }
-        }
-        return false;
-      }
-    }
-  }
-  return true;
-}
+// console.table(arr);
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
+// const shuffle = (array) => {
+//   for (let i = array.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
+//     [array[i], array[j]] = [array[j], array[i]];
+//   }
+// }
 
-function generateSudoku() {
-  let board = Array.from({ length: 9 }, () => Array(9).fill(0));
-  fillBoard(board);
-  return board;
-}
-
-let arr = generateSudoku();
-
-console.table(arr);
-// // creating the matrix
 // let arr = [];
 // for (let i = 1; i <= 9; i++) {
-//   let array = [];
-//   for (let j = 1; j <= 9; j++) {
-//     array.push(Math.round(Math.random() * 10));
-//   }
+//   let array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+//   shuffle(array);
 //   arr.push(array);
 // }
 
+// console.log(arr);
 
 
 // get the diagonal from a matrix
