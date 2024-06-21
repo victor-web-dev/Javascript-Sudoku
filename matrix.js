@@ -18,9 +18,10 @@ const isValid = (board, row, col, num) => {
 const fillBoard = (board) => {
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
-      if (board[row][col] == 0) {   //if it is filled 0
+      if (board[row][col] == 0) {
+        //if it is filled 0
         // let nums = shuffleArray([...Array(9).keys()].map(n => n + 1)); // Shuffle numbers 1 to 9
-        let nums = [1,2,3,4,5,6,7,8,9]
+        let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         nums = shuffleArray(nums);
         for (let num of nums) {
           if (isValid(board, row, col, num)) {
@@ -46,7 +47,7 @@ const shuffleArray = (array) => {
   return array;
 }
 
-const generateSudoku = () => {
+export function generateSudoku() {
   let board = Array.from({ length: 9 }, () => Array(9).fill(0));
   fillBoard(board);
   return board;
@@ -61,8 +62,6 @@ const generateSudoku = () => {
 //   }
 //   arr.push(array);
 // }
-
-
 
 // get the diagonal from a matrix
 const diagonal = (array) => {
@@ -170,8 +169,14 @@ const getAllBlocks = (array) => {
 // colValues(arr, 8);
 // getBlocksPositions(arr);
 
+// block(arr, 0, 1);
 
 // getAllBlocks(arr);
+
+let arr = generateSudoku();
+
+console.log(arr);
+
 
 
 let arr = generateSudoku();

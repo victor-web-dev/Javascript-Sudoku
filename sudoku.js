@@ -1,3 +1,5 @@
+import { generateSudoku } from "./matrix.js";
+
 const matrix = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -18,7 +20,7 @@ const validNumber = (event) => {
   const { keyCode, key, target } = event;
   if (keyCode >= 48 && keyCode <= 57) return (target.value = key); // numbers 0 - 9
   if (keyCode == 8) return (target.value = ""); // backspace
-  console.log(errorFlag)
+  console.log(errorFlag);
 };
 
 // handle Tab button
@@ -43,6 +45,17 @@ const handleChangeInputValue = (event) => {
   console.log(matrix);
 };
 
+const solveSudoku = (event) => {
+  const arr = generateSudoku();
+
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length; j++) {
+      const input = document.getElementById(`${i}${j}`);
+      input.value = arr[i][j];
+    }
+  }
+};
+
 const createSudokuTable = () => {
   //Create Table
   const table = createElement("table");
@@ -64,7 +77,7 @@ const createSudokuTable = () => {
   tHeader.classList.add("p-1");
 
   tHeaderBtn.classList.add("p-1");
-  tHeaderBtn.addEventListener("click", () => {});
+  tHeaderBtn.addEventListener("click", solveSudoku);
 
   tHeader.append(tHeaderBtn);
   tHeadRow.append(tHeader);
@@ -123,40 +136,40 @@ let errorFlag = "clear";
 //       errorFlag = "onlyNumber";
 //     }
 
-//     switch (errorFlag) {
-//       case "clear": //if it is "1"-"9"  correct
-//         inputElement.parentElement.classList.remove("duplicate"); //reset
-//         if (selectNum == null) {
-//           //first input
-//           selectNum = inputValue;
-//           rowCheckingArray.push(inputValue);
-//           blockcheckingArray.push(inputValue);
-//         } else {
-//           //after 2nd
-//           selectNum = inputValue;
-//           let duplicateFlag = false;
-//           checkArray(rowCheckingArray);
-//           checkArray(blockcheckingArray)
+    switch (errorFlag) {
+      case "clear": //if it is "1"-"9"  correct
+        inputElement.parentElement.classList.remove("duplicate"); //reset
+        if (selectNum == null) {
+          //first input
+          selectNum = inputValue;
+          rowCheckingArray.push(inputValue);
+          blockcheckingArray.push(inputValue);
+        } else {
+          //after 2nd
+          selectNum = inputValue;
+          let duplicateFlag = false;
+          checkArray(rowCheckingArray);
+          checkArray(blockcheckingArray)
 
-//           if (duplicateFlag) {
-//             //if digit is duplicated
-//             inputElement.parentElement.classList.add("duplicate"); //give a class
-//             document.querySelector(".warning").style.display = "block"; //show warning
-//             setTimeout(() => {
-//               //show 1s then hide
-//               document.querySelector(".warning").style.display = "none";
-//             }, 1000);
+          if (duplicateFlag) {
+            //if digit is duplicated
+            inputElement.parentElement.classList.add("duplicate"); //give a class
+            document.querySelector(".warning").style.display = "block"; //show warning
+            setTimeout(() => {
+              //show 1s then hide
+              document.querySelector(".warning").style.display = "none";
+            }, 1000);
 
-//           } else {
-//             //if it is a first digit
-//             rowCheckingArray.push(inputValue);
-//             blockcheckingArray.push(inputValue);
-//             console.log(`Number: ${selectNum} Place: ${id}`);
-//             console.log(`Row Array: ${rowCheckingArray}`);
-//             console.log(`Block Array: ${blockcheckingArray}`);
-//           }
-//         }
-//         break;
+          } else {
+            //if it is a first digit
+            rowCheckingArray.push(inputValue);
+            blockcheckingArray.push(inputValue);
+            console.log(`Number: ${selectNum} Place: ${id}`);
+            console.log(`Row Array: ${rowCheckingArray}`);
+            console.log(`Block Array: ${blockcheckingArray}`);
+          }
+        }
+        break;
 
 //       case "oneNumber": //if they put more than 2 digits
 //         alert("Only One Number");
@@ -179,7 +192,7 @@ const checkArray = (Array) => {
       break;
     }
   }
-}
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   //DOMContentLoaded is to execute after loading HTML
@@ -197,4 +210,5 @@ document.addEventListener("DOMContentLoaded", () => {
       // );
     }
   }
-});
+})
+    };
