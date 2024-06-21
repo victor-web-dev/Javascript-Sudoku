@@ -102,7 +102,8 @@ const rowValues = (array, indexPos = 0) => {
     }
     break;
   }
-  console.log("Row: " + row);
+  // console.log("Row: " + row);
+  return row;
 };
 
 // get all values of a column
@@ -113,9 +114,10 @@ const colValues = (array, colPos = 0) => {
     col.push(array[i][colPos]);
   }
   console.log("Col: " + col);
+  return col;
 };
 
-// get all blocks starting positions
+// get all 3x3 blocks starting positions
 const getBlocksPositions = (array) => {
   const blocksPositions = [];
   for (let i = 0; i < array.length; i++) {
@@ -127,12 +129,13 @@ const getBlocksPositions = (array) => {
   }
 
   //   console.log("block: " + block);
-  //   console.log(blocksPositions);
+  // console.log(blocksPositions);
   //   console.log(blocksPositions[0][1]);
   return blocksPositions;
 };
 
 // get a 3x3 block value;
+//propably adapt to get the values from the specific blocks
 const block = (array, row = 0, col = 0) => {
   const block = [];
   for (let i = row; i < row + 3; i++) {
@@ -140,7 +143,7 @@ const block = (array, row = 0, col = 0) => {
       block.push(array[i][j]);
     }
   }
-  //   console.log(block);
+  console.log(block);
   return block;
 };
 
@@ -166,10 +169,10 @@ const getAllBlocks = (array) => {
 
 // diagonal(arr);
 // antiDiagonal(arr);
-// rowValues(arr, 8);
-// colValues(arr, 4);
+// rowValues(arr, 4);
+// colValues(arr, 8);
 // getBlocksPositions(arr);
 
-// block(arr, 0, 0);
+block(arr, 0, 1);
 
-getAllBlocks(arr);
+// getAllBlocks(arr);
