@@ -1,3 +1,5 @@
+import { generateSudoku } from "./matrix.js";
+
 const matrix = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -42,6 +44,17 @@ const handleChangeInputValue = (event) => {
   console.log(matrix);
 };
 
+const solveSudoku = (event) => {
+  const arr = generateSudoku();
+
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length; j++) {
+      const input = document.getElementById(`${i}${j}`);
+      input.value = arr[i][j];
+    }
+  }
+};
+
 const createSudokuTable = () => {
   //Create Table
   const table = createElement("table");
@@ -63,7 +76,7 @@ const createSudokuTable = () => {
   tHeader.classList.add("p-1");
 
   tHeaderBtn.classList.add("p-1");
-  tHeaderBtn.addEventListener("click", () => {});
+  tHeaderBtn.addEventListener("click", solveSudoku);
 
   tHeader.append(tHeaderBtn);
   tHeadRow.append(tHeader);
