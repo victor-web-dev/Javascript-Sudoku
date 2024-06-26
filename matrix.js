@@ -88,7 +88,7 @@ const antiDiagonal = (array) => {
 };
 
 //get all values of a row
-const rowValues = (array, indexPos = 0) => {
+export const rowValues = (array, indexPos = 0) => {
   if (indexPos >= array.length) return -1;
   let row = [];
   for (let i = indexPos; i < array.length; i++) {
@@ -102,7 +102,7 @@ const rowValues = (array, indexPos = 0) => {
 };
 
 // get all values of a column
-const colValues = (array, colPos = 0) => {
+export const colValues = (array, colPos = 0) => {
   if (colPos >= array.length) return -1;
   let col = [];
   for (let i = 0; i < array.length; i++) {
@@ -113,7 +113,7 @@ const colValues = (array, colPos = 0) => {
 };
 
 // get all 3x3 blocks starting positions
-const getBlocksPositions = (array) => {
+export const getBlocksPositions = (array) => {
   const blocksPositions = [];
   for (let i = 0; i < array.length; i++) {
     let tempArr = [];
@@ -143,7 +143,7 @@ const block = (array, row = 0, col = 0) => {
 };
 
 // gets all 3x3 blocks data;
-const getAllBlocks = (array) => {
+export const getAllBlocks = (array) => {
   let count = 1;
   const obj = {};
   let positions = getBlocksPositions(array);
