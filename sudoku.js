@@ -36,15 +36,17 @@ const tabHandler = (event) => {
   }
 };
 
+//Input
 const handleChangeInputValue = (event) => {
   const { target, keyCode } = event;
-  if (keyCode == 8 || keyCode == 9) return;
-  const row = target.id.charAt(0);
-  const col = target.id.charAt(1);
+  if (keyCode == 8 || keyCode == 9) return; //backspace and tab
+  const row = target.id.charAt(0);  //get the position
+  const col = target.id.charAt(1);  //get the position
   matrix[row][col] = parseInt(target.value);
   console.log(matrix);
 };
 
+//Solver
 const solveSudoku = (event) => {
   const arr = generateSudoku();
 
@@ -119,22 +121,23 @@ const getBlockIndex = (i, j) => {
 };
 let selectNum = null;
 let errorFlag = "clear";
-// //method to check depulicated
-// const checkDuplicate = (id, rowCheckingArray, blockcheckingArray) => {
-//   const inputElement = document.getElementById(id);
-//   inputElement.addEventListener("input", (event) => {
-//     let inputValue = event.target.value; //what filled in input
 
-//     if (inputValue.length > 1) {
-//       //if they put more than 2 digits
-//       errorFlag = "oneNumber";
-//     } else if (/^[1-9]$/.test(inputValue)) {
-//       //if it is "1"-"9"  correct
-//       errorFlag = "clear";
-//     } else {
-//       //if they put non-digit char
-//       errorFlag = "onlyNumber";
-//     }
+//method to check depulicated
+const checkDuplicate = (id, rowCheckingArray, blockcheckingArray) => {
+  const inputElement = document.getElementById(id);
+  inputElement.addEventListener("input", (event) => {
+    let inputValue = event.target.value; //what filled in input
+
+    if (inputValue.length > 1) {
+      //if they put more than 2 digits
+      errorFlag = "oneNumber";
+    } else if (/^[1-9]$/.test(inputValue)) {
+      //if it is "1"-"9"  correct
+      errorFlag = "clear";
+    } else {
+      //if they put non-digit char
+      errorFlag = "onlyNumber";
+    }
 
     switch (errorFlag) {
       case "clear": //if it is "1"-"9"  correct
@@ -149,7 +152,7 @@ let errorFlag = "clear";
           selectNum = inputValue;
           let duplicateFlag = false;
           checkArray(rowCheckingArray);
-          checkArray(blockcheckingArray)
+          checkArray(blockcheckingArray);
 
           if (duplicateFlag) {
             //if digit is duplicated
@@ -159,7 +162,6 @@ let errorFlag = "clear";
               //show 1s then hide
               document.querySelector(".warning").style.display = "none";
             }, 1000);
-
           } else {
             //if it is a first digit
             rowCheckingArray.push(inputValue);
@@ -171,18 +173,18 @@ let errorFlag = "clear";
         }
         break;
 
-//       case "oneNumber": //if they put more than 2 digits
-//         alert("Only One Number");
-//         event.preventDefault();
-//         break;
+      case "oneNumber": //if they put more than 2 digits
+        alert("Only One Number");
+        event.preventDefault();
+        break;
 
-//       case "onlyNumber": //if they put non-digit char
-//         alert("Only Number");
-//         event.preventDefault();
-//         break;
-//     }
-//   });
-// };
+      case "onlyNumber": //if they put non-digit char
+        alert("Only Number");
+        event.preventDefault();
+        break;
+    }
+  });
+};
 
 //Method to check number in Array
 const checkArray = (Array) => {
@@ -203,12 +205,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let rowCheckingArray = [];
     for (let j = 1; j <= 9; j++) {
       let blockIndex = getBlockIndex(i, j);
-      // checkDuplicate(
-      //   `${i}${j}`,
-      //   rowCheckingArray,
-      //   blockcheckingArrays[blockIndex]
-      // );
+      checkDuplicate(
+        `${i}${j}`,
+        rowCheckingArray,
+        blockcheckingArrays[blockIndex]
+      );
     }
   }
-})
-    }
+});

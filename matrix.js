@@ -4,10 +4,15 @@ const getBlockIndex = (i, j) => {
 
 const isValid = (board, row, col, num) => {
   // Check if 'num' is not in current row, current column and current 3x3 sub-box
-  for (let x = 0; x < 9; x++) { //error condition
-    if (board[row][x] == num ||   //check duplicated in row
-      board[x][col] == num ||   //check duplicated in column
-        board[3 * Math.floor(row / 3) + Math.floor(x / 3)][3 * Math.floor(col / 3) + x % 3] == num) {   //check duplicated in block
+  for (let x = 0; x < 9; x++) {
+    if (
+      board[row][x] == num || //check duplicated in row
+      board[x][col] == num || //check duplicated in column
+      board[3 * Math.floor(row / 3) + Math.floor(x / 3)][
+        3 * Math.floor(col / 3) + (x % 3)
+      ] == num
+    ) {
+      //check duplicated in block
       return false;
     }
   }
@@ -46,7 +51,7 @@ const shuffleArray = (array) => {
   return array;
 }
 
-export function generateSudoku() {
+export const generateSudoku = () => {
   let board = Array.from({ length: 9 }, () => Array(9).fill(0));
   fillBoard(board);
   return board;
@@ -97,7 +102,6 @@ export const rowValues = (array, indexPos = 0) => {
     }
     break;
   }
-  // console.log("Row: " + row);
   return row;
 };
 
@@ -108,12 +112,11 @@ export const colValues = (array, colPos = 0) => {
   for (let i = 0; i < array.length; i++) {
     col.push(array[i][colPos]);
   }
-  console.log("Col: " + col);
   return col;
 };
 
 // get all 3x3 blocks starting positions
-export const getBlocksPositions = (array) => {
+const getBlocksPositions = (array) => {
   const blocksPositions = [];
   for (let i = 0; i < array.length; i++) {
     let tempArr = [];
@@ -138,7 +141,7 @@ const block = (array, row = 0, col = 0) => {
       block.push(array[i][j]);
     }
   }
-  console.log(block);
+  // console.log(block);
   return block;
 };
 
@@ -158,8 +161,7 @@ export const getAllBlocks = (array) => {
   for (let i = 1; i <= 9; i++) {
     obj[i] = block(array, obj[i][0], obj[i][1]);
   }
-  console.log(obj);
-  //   return obj;
+    return obj;
 };
 
 // diagonal(arr);
@@ -169,8 +171,11 @@ export const getAllBlocks = (array) => {
 // getBlocksPositions(arr);
 
 // block(arr, 0, 1);
+// let arr = generateSudoku();
 
-// getAllBlocks(arr);
+// console.table(arr);
+// colValues(arr);
 
-let arr = generateSudoku();
-console.log(arr);
+
+// let elements = getAllBlocks(arr);
+

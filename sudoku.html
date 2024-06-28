@@ -10,12 +10,69 @@
         margin: 0;
         box-sizing: border-box;
       }
+
       main {
+        width: 70%;
         display: flex;
+        justify-content: center;
+        gap: 30px;
+        align-items: center;
+      }
+
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .button-level {
+        cursor: pointer;
+        width: 100%;
+        color: #ff8400;
+        background-color: transparent;
+        background-image: none;
+        border-radius: 5px;
+        border-color: #ff8400;
+      }
+
+      .button-level:hover {
+        color: #fff;
+        background-color: #ff8400;
+        border-color: #ff8400;
+      }
+
+      .button-level.active {
+        color: #fff;
+        background-color: #ff8400;
+        border-color: #ff8400;
+      }
+
+      .game-container {
+        display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100dvh;
       }
+
+      .button-primary {
+        cursor: pointer;
+        width: 100%;
+        color: #007bff;
+        background-color: transparent;
+        background-image: none;
+        border-radius: 5px;
+        border-color: #007bff;
+      }
+
+      .button-primary:hover {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+
       .table {
         width: 500px;
         border-spacing: 0;
@@ -60,19 +117,24 @@
       }
 
       .duplicate {
-        background-color: red !important;
+        background-color: rgb(247, 48, 48) !important;
       }
       .warning {
         color: red;
         display: none;
         font-size: 30px;
       }
+      .keyNumber {
+        background-color: rgb(188, 188, 242);
+        color: black;
+      }
     </style>
   </head>
   <body>
-    <main>
+    <div class="game-container">
       <h3 class="warning">Number is duplicated</h3>
-    </main>
+      <main></main>
+    </div>
   </body>
   <script type="module" src="./sudokuCopy.js"></script>
 </html>
