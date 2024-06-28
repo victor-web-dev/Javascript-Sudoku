@@ -7,6 +7,8 @@ let duplicateFlag = false;
 const min = 0;
 const max = 8;
 let fillNum = 35;
+let missCounter = 0;
+let hintCounter = 0 ;
 
 let matrix = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -73,7 +75,6 @@ const randomNumber = () => {
 //get and input random Index
 const getKeyNumbers = () => {
   console.table(answerSudoku);
-  console.log(fillNum)
   const usedIDs = Array.from({ length: 9 }, () => Array(9).fill(false));  //Array for checking
   for(let idx=0; idx < fillNum; idx++) {
     let keyRow, keyCol;
@@ -90,9 +91,10 @@ const getKeyNumbers = () => {
   }
 }
 
+
 //Create Table
 const createSudokuTable = () => {
-  //create buttons to choose level")
+  //create buttons to choose level"
   const div = createElement("div");
   div.classList.add("button-container")
   for(let idx=0; idx<3; idx++){
@@ -147,14 +149,21 @@ const createSudokuTable = () => {
     tHeader.classList.add("p-1");
     tHeaderBtn.classList.add("p-1");
     switch(idx){
-      case 0:
+      case 0: //answer
         tHeaderBtn.addEventListener("click", solveSudoku);
         break;
-      case 1:
+      case 1: //newgame
         tHeaderBtn.addEventListener("click", newGame);
         break;
-      case 2:
-        //Hist function
+      case 2: //hint
+        const tmpFillNum = fillNum;
+        tHeaderBtn.addEventListener("click", () =>{
+          fillNum  = 1;
+          getKeyNumbers();
+          fillNum = tmpFillNum;
+          hintCounter++
+          currentCounter()
+        })
         break;
 
     }
@@ -210,7 +219,37 @@ const createSudokuTable = () => {
   table.classList.add("table");
   table.append(tCaption, tHead, tBody);
   document.querySelector("main").appendChild(table);
+
+
+  //disply counter
+  const counterDiv = createElement("div");
+  counterDiv.classList.add("counter-container")
+  for(let idx=0; idx<2; idx++){
+    const counterHeader = createElement("h2");
+    counterHeader.classList.add("p-1");
+    switch(idx){
+      case 0:
+        counterHeader.innerText=`MISS COUNTER: ${missCounter}`
+        counterHeader.classList.add("miss-counter");
+        break;
+      case 1:
+        counterHeader.innerText=`HINT COUNTER: ${hintCounter}`
+        counterHeader.classList.add("hint-counter");
+        break;
+    }
+    counterDiv.append(counterHeader);
+  }
+  document.querySelector("main").appendChild(counterDiv);
 };
+
+//renew counter info
+const currentCounter = () => {
+  const missH2 = document.querySelector(".miss-counter");
+  const hintH2 = document.querySelector(".hint-counter");
+  console.log(missCounter)
+  missH2.innerText=`MISS COUNTER: ${missCounter}`
+  hintH2.innerText=`HINT COUNTER: ${hintCounter}`
+  }
 
 // Method to get block index
 const getBlockIndex = (i, j) => {
@@ -233,6 +272,8 @@ const checkDuplicate = (event, id, rowCheckingArray, colCheckingArray, blockChec
   let blockDuplicate = checkArray(blockCheckingArray, selectNum);
   if (rowDuplicate || colDuplicate || blockDuplicate) { // If duplicated
     event.preventDefault();
+    missCounter++
+    currentCounter()
     inputElement.classList.add("duplicate"); // Apply duplicate style
     console.log(`Row: ${rowDuplicate}`)
     console.log(`Col: ${colDuplicate}`)
@@ -297,6 +338,8 @@ const levelButtonHandler = () =>{
 
 //Make new game
 const newGame = () => {
+  hintCounter = 0;
+  missCounter = 0
   const mainElement = document.querySelector("main"); //select <main>
   mainElement.innerHTML = ""; //delete <main>
   createSudokuTable();
