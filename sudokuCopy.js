@@ -43,7 +43,7 @@ const tabHandler = (event) => {
   }
 };
 
-//Input
+//Input Handler
 const handleChangeInputValue = (event) => {
   const { target, keyCode } = event;
   if (keyCode == 8 || keyCode == 9) return; //backspace and tab
@@ -70,7 +70,7 @@ const solveSudoku = (event) => {
 const randomNumber = () => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-//get random Index
+//get and input random Index
 const getKeyNumbers = () => {
   console.table(answerSudoku);
   console.log(fillNum)
@@ -92,7 +92,6 @@ const getKeyNumbers = () => {
 
 //Create Table
 const createSudokuTable = () => {
-
   //create buttons to choose level")
   const div = createElement("div");
   div.classList.add("button-container")
@@ -105,18 +104,21 @@ const createSudokuTable = () => {
         levelBtn.innerText="EASY"
         levelBtn.addEventListener("click", ()=> {
           fillNum = 45
+          newGame()
         })
         break;
       case 1:
         levelBtn.innerText="NORMAL"
         levelBtn.addEventListener("click", ()=> {
           fillNum = 35
+          newGame()
         })        
         break;
       case 2:
         levelBtn.innerText="HARD"
         levelBtn.addEventListener("click", ()=> {
           fillNum = 20
+          newGame()
         })        
         break;
     }
@@ -223,11 +225,9 @@ const checkDuplicate = (event, id, rowCheckingArray, colCheckingArray, blockChec
   const { keyCode, target } = event;
   inputElement.classList.remove("duplicate"); // Reset style
   selectNum = parseInt(target.value.trim());
-
-  if (selectNum === "0") {
+  if (selectNum === "0") {    //first
     return;
   }
-
   let rowDuplicate = checkArray(rowCheckingArray, selectNum);
   let colDuplicate = checkArray(colCheckingArray, selectNum);
   let blockDuplicate = checkArray(blockCheckingArray, selectNum);
@@ -246,15 +246,15 @@ const checkDuplicate = (event, id, rowCheckingArray, colCheckingArray, blockChec
   }
 };
 
-const checkArray = (array, checkNum) => {
-  // Count occurrences of checkNum in array
+//Check if number is dureplicated
+const checkArray = (array, checkNum) => {   // Count occurrences of checkNum in array
   let count = array.reduce((acc, val) => {
     return acc + (val === checkNum ? 1 : 0);
   }, 0);
-
   return count >= 2;  // Return true if checkNum appears 2 or more times
 };
 
+//Get current table cell
 const currentTable = () => {
   const table = document.querySelector("table"); 
   const rows = table.querySelectorAll("tr"); 
@@ -272,7 +272,7 @@ const currentTable = () => {
   return matrix.filter(row => row.length); // 長さが 0 の配列をフィルタリング
 };
 
-// Function to display warning message
+// Display warning message
 const displayWarning = () => {
   const warningElement = document.querySelector(".warning");
   warningElement.style.display = "block";
@@ -281,20 +281,34 @@ const displayWarning = () => {
   }, 1000);
 };
 
+//Handle button for selceting level
+const levelButtonHandler = () =>{
+  document.querySelectorAll(".button-level").forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll(".button-level").forEach(otherButton => {
+        if (otherButton !== button) {
+            otherButton.classList.remove('active');
+        }
+    });
+        button.classList.toggle('active');
+    });
+  });
+}
+
+//Make new game
 const newGame = () => {
   const mainElement = document.querySelector("main"); //select <main>
   mainElement.innerHTML = ""; //delete <main>
   createSudokuTable();
   answerSudoku = generateSudoku();
   getKeyNumbers();
+  levelButtonHandler();
 }
 
-document.addEventListener("DOMContentLoaded", () => { // Execute after HTML is loaded
+// Execute after HTML is loaded
+document.addEventListener("DOMContentLoaded", () => { 
   createSudokuTable();
   answerSudoku = generateSudoku();
   getKeyNumbers();
-
-  document.querySelector(".button-level").addEventListener('click', () => {
-    document.querySelector(".button-level").classList.toggle('active');
-});
+  levelButtonHandler();
 });
