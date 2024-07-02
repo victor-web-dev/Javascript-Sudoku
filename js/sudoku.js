@@ -161,16 +161,7 @@ const checkDuplicate = (
     missCounter++;
     currentCounter();
     inputElement.classList.add("duplicate"); // Apply duplicate style
-    console.log(`Row: ${rowDuplicate}`);
-    console.log(`Col: ${colDuplicate}`);
-    console.log(`Block: ${blockDuplicate}`);
     displayWarning(); // Display warning message
-  } else {
-    // No duplicates
-    console.log(`Number: ${selectNum} Place: ${id}`); //show Position
-    console.log(`Row Array: ${rowCheckingArray}`); //show row Array
-    console.log(`Col Array: ${colCheckingArray}`); //show row Array
-    console.log(`Block Array: ${blockCheckingArray}`); //show Block Array
   }
 };
 
