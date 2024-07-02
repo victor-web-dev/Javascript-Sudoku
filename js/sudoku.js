@@ -218,7 +218,7 @@ const duplicateHandler = (event, i, j) => {
     //press tabs
     return;
   } else if (event.keyCode == 8) {
-    //prsss backspace
+    //press backspace
     document.getElementById(`${i}${j}`).classList.remove("duplicate"); // Reset style
   } else {
     matrix = currentTable(); //renew table info
