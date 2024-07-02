@@ -213,6 +213,32 @@ const levelButtonHandler = () => {
   });
 };
 
+const duplicateHandler = (event, i, j) => {
+  if (event.keyCode == 9) {
+    //press tabs
+    return;
+  } else if (event.keyCode == 8) {
+    //prsss backspace
+    document.getElementById(`${i}${j}`).classList.remove("duplicate"); // Reset style
+  } else {
+    matrix = currentTable(); //renew table info
+    console.table(matrix); //show
+    const allBlocks = getAllBlocks(matrix);
+    const blockIndex = getBlockIndex(i + 1, j + 1);
+    const blockData = allBlocks[blockIndex + 1];
+    const blockCheckingArrays = blockData.slice();
+    const rowCheckingArray = rowValues(matrix, i);
+    const colCheckingArray = colValues(matrix, j);
+    checkDuplicate(
+      event,
+      `${i}${j}`,
+      rowCheckingArray,
+      colCheckingArray,
+      blockCheckingArrays
+    );
+  }
+};
+
 //Make new game
 const newGame = () => {
   hintCounter = 0;
@@ -285,31 +311,9 @@ const createTable = () => {
       input.value = 0;
       input.addEventListener("keydown", validNumber);
       input.addEventListener("keydown", tabHandler);
-      input.addEventListener("keydown", (event) => {
-        if (event.keyCode == 9) {
-          //press tabs
-          return;
-        } else if (event.keyCode == 8) {
-          //prsss backspace
-          document.getElementById(`${i}${j}`).classList.remove("duplicate"); // Reset style
-        } else {
-          matrix = currentTable(); //renew table info
-          console.table(matrix); //show
-          const allBlocks = getAllBlocks(matrix);
-          const blockIndex = getBlockIndex(i + 1, j + 1);
-          const blockData = allBlocks[blockIndex + 1];
-          const blockCheckingArrays = blockData.slice();
-          const rowCheckingArray = rowValues(matrix, i);
-          const colCheckingArray = colValues(matrix, j);
-          checkDuplicate(
-            event,
-            `${i}${j}`,
-            rowCheckingArray,
-            colCheckingArray,
-            blockCheckingArrays
-          );
-        }
-      });
+      input.addEventListener("keydown", (event) =>
+        duplicateHandler(event, i, j)
+      );
       input.addEventListener("keydown", handleChangeInputValue);
       if ((j + 1) % 3 === 0) input.classList.add("lineY");
       if ((i + 1) % 3 === 0) input.classList.add("lineI");
