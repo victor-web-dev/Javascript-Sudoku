@@ -100,9 +100,10 @@ const solveSudoku = (event) => {
 const randomNumber = () => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
 //get and input random Index
 const getKeyNumbers = () => {
-  console.table(answerSudoku);
+  // console.table(answerSudoku);
   const usedIDs = Array.from({ length: 9 }, () => Array(9).fill(false)); //Array for checking
   for (let idx = 0; idx < fillNum; idx++) {
     let keyRow, keyCol;
@@ -117,6 +118,122 @@ const getKeyNumbers = () => {
     inputKey.classList.add("keyNumber"); //add class for changing bg-color
     inputKey.setAttribute("disabled", "");
   }
+};
+
+//renew counter info
+const currentCounter = () => {
+  const missH2 = document.querySelector(".miss-counter");
+  const hintH2 = document.querySelector(".hint-counter");
+  console.log(missCounter);
+  missH2.innerText = `MISS COUNTER: ${missCounter}`;
+  hintH2.innerText = `HINT COUNTER: ${hintCounter}`;
+};
+
+// Method to get block index
+const getBlockIndex = (i, j) => {
+  return Math.floor((i - 1) / 3) * 3 + Math.floor((j - 1) / 3);
+};
+
+// Method to check duplicated
+const checkDuplicate = (
+  event,
+  id,
+  rowCheckingArray,
+  colCheckingArray,
+  blockCheckingArray
+) => {
+  const row = parseInt(id.charAt(0));
+  const col = parseInt(id.charAt(1));
+  let inputElement = document.getElementById(id);
+  const { keyCode, target } = event;
+  inputElement.classList.remove("duplicate"); // Reset style
+  selectNum = parseInt(target.value.trim());
+  if (selectNum === "0") {
+    //first
+    return;
+  }
+  let rowDuplicate = checkArray(rowCheckingArray, selectNum);
+  let colDuplicate = checkArray(colCheckingArray, selectNum);
+  let blockDuplicate = checkArray(blockCheckingArray, selectNum);
+  if (rowDuplicate || colDuplicate || blockDuplicate) {
+    // If duplicated
+    event.preventDefault();
+    missCounter++;
+    currentCounter();
+    inputElement.classList.add("duplicate"); // Apply duplicate style
+    console.log(`Row: ${rowDuplicate}`);
+    console.log(`Col: ${colDuplicate}`);
+    console.log(`Block: ${blockDuplicate}`);
+    displayWarning(); // Display warning message
+  } else {
+    // No duplicates
+    console.log(`Number: ${selectNum} Place: ${id}`); //show Position
+    console.log(`Row Array: ${rowCheckingArray}`); //show row Array
+    console.log(`Col Array: ${colCheckingArray}`); //show row Array
+    console.log(`Block Array: ${blockCheckingArray}`); //show Block Array
+  }
+};
+
+//Check if number is duplicated
+const checkArray = (array, checkNum) => {
+  // Count occurrences of checkNum in array
+  let count = array.reduce((acc, val) => {
+    return acc + (val === checkNum ? 1 : 0);
+  }, 0);
+  return count >= 2; // Return true if checkNum appears 2 or more times
+};
+
+//Get current table cell
+const currentTable = () => {
+  const table = document.querySelector("table");
+  const rows = table.querySelectorAll("tr");
+  const matrix = [];
+
+  rows.forEach((row) => {
+    const cells = row.querySelectorAll("td");
+    const rowValues = Array.from(cells).map((cell) => {
+      const inputValue = cell.querySelector("input").value.trim();
+      return inputValue !== "" ? parseInt(inputValue) : 0;
+    });
+    matrix.push(rowValues);
+  });
+
+  return matrix.filter((row) => row.length);
+};
+
+// Display warning message
+const displayWarning = () => {
+  const warningElement = document.querySelector(".warning");
+  warningElement.style.display = "block";
+  setTimeout(() => {
+    warningElement.style.display = "none";
+  }, 1000);
+};
+
+//Handle button for selecting level
+const levelButtonHandler = () => {
+  document.querySelectorAll(".button-level").forEach((button) => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".button-level").forEach((otherButton) => {
+        if (otherButton !== button) {
+          otherButton.classList.remove("active");
+        }
+      });
+      button.classList.toggle("active");
+    });
+  });
+};
+
+//Make new game
+const newGame = () => {
+  hintCounter = 0;
+  missCounter = 0;
+  const mainElement = document.querySelector("main"); //select <main>
+  mainElement.innerHTML = ""; //delete <main>
+  createSudokuTable();
+  answerSudoku = generateSudoku();
+  getKeyNumbers();
+  levelButtonHandler();
 };
 
 //Create Table
@@ -270,122 +387,6 @@ const createSudokuTable = () => {
     counterDiv.append(counterHeader);
   }
   document.querySelector("main").appendChild(counterDiv);
-};
-
-//renew counter info
-const currentCounter = () => {
-  const missH2 = document.querySelector(".miss-counter");
-  const hintH2 = document.querySelector(".hint-counter");
-  console.log(missCounter);
-  missH2.innerText = `MISS COUNTER: ${missCounter}`;
-  hintH2.innerText = `HINT COUNTER: ${hintCounter}`;
-};
-
-// Method to get block index
-const getBlockIndex = (i, j) => {
-  return Math.floor((i - 1) / 3) * 3 + Math.floor((j - 1) / 3);
-};
-
-// Method to check duplicated
-const checkDuplicate = (
-  event,
-  id,
-  rowCheckingArray,
-  colCheckingArray,
-  blockCheckingArray
-) => {
-  const row = parseInt(id.charAt(0));
-  const col = parseInt(id.charAt(1));
-  let inputElement = document.getElementById(id);
-  const { keyCode, target } = event;
-  inputElement.classList.remove("duplicate"); // Reset style
-  selectNum = parseInt(target.value.trim());
-  if (selectNum === "0") {
-    //first
-    return;
-  }
-  let rowDuplicate = checkArray(rowCheckingArray, selectNum);
-  let colDuplicate = checkArray(colCheckingArray, selectNum);
-  let blockDuplicate = checkArray(blockCheckingArray, selectNum);
-  if (rowDuplicate || colDuplicate || blockDuplicate) {
-    // If duplicated
-    event.preventDefault();
-    missCounter++;
-    currentCounter();
-    inputElement.classList.add("duplicate"); // Apply duplicate style
-    console.log(`Row: ${rowDuplicate}`);
-    console.log(`Col: ${colDuplicate}`);
-    console.log(`Block: ${blockDuplicate}`);
-    displayWarning(); // Display warning message
-  } else {
-    // No duplicates
-    console.log(`Number: ${selectNum} Place: ${id}`); //show Position
-    console.log(`Row Array: ${rowCheckingArray}`); //show row Array
-    console.log(`Col Array: ${colCheckingArray}`); //show row Array
-    console.log(`Block Array: ${blockCheckingArray}`); //show Block Array
-  }
-};
-
-//Check if number is dureplicated
-const checkArray = (array, checkNum) => {
-  // Count occurrences of checkNum in array
-  let count = array.reduce((acc, val) => {
-    return acc + (val === checkNum ? 1 : 0);
-  }, 0);
-  return count >= 2; // Return true if checkNum appears 2 or more times
-};
-
-//Get current table cell
-const currentTable = () => {
-  const table = document.querySelector("table");
-  const rows = table.querySelectorAll("tr");
-  const matrix = [];
-
-  rows.forEach((row) => {
-    const cells = row.querySelectorAll("td");
-    const rowValues = Array.from(cells).map((cell) => {
-      const inputValue = cell.querySelector("input").value.trim();
-      return inputValue !== "" ? parseInt(inputValue) : 0; // 数値に変換できない場合は 0 を返す
-    });
-    matrix.push(rowValues);
-  });
-
-  return matrix.filter((row) => row.length); // 長さが 0 の配列をフィルタリング
-};
-
-// Display warning message
-const displayWarning = () => {
-  const warningElement = document.querySelector(".warning");
-  warningElement.style.display = "block";
-  setTimeout(() => {
-    warningElement.style.display = "none";
-  }, 1000);
-};
-
-//Handle button for selceting level
-const levelButtonHandler = () => {
-  document.querySelectorAll(".button-level").forEach((button) => {
-    button.addEventListener("click", () => {
-      document.querySelectorAll(".button-level").forEach((otherButton) => {
-        if (otherButton !== button) {
-          otherButton.classList.remove("active");
-        }
-      });
-      button.classList.toggle("active");
-    });
-  });
-};
-
-//Make new game
-const newGame = () => {
-  hintCounter = 0;
-  missCounter = 0;
-  const mainElement = document.querySelector("main"); //select <main>
-  mainElement.innerHTML = ""; //delete <main>
-  createSudokuTable();
-  answerSudoku = generateSudoku();
-  getKeyNumbers();
-  levelButtonHandler();
 };
 
 // Execute after HTML is loaded
