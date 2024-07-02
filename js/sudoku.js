@@ -251,6 +251,14 @@ const newGame = () => {
   levelButtonHandler();
 };
 
+//Hint button
+const hintBtnHandler = () => {
+  fillNum = 1;
+  getKeyNumbers();
+  hintCounter++;
+  currentCounter();
+};
+
 // Create Table for Sudoku
 const createTable = () => {
   const table = createElement("table");
@@ -281,14 +289,7 @@ const createTable = () => {
         tHeaderBtn.addEventListener("click", newGame);
         break;
       case 2: //hint
-        const tmpFillNum = fillNum;
-        tHeaderBtn.addEventListener("click", () => {
-          fillNum = 1;
-          getKeyNumbers();
-          fillNum = tmpFillNum;
-          hintCounter++;
-          currentCounter();
-        });
+        tHeaderBtn.addEventListener("click", hintBtnHandler);
         break;
     }
     tHeader.append(tHeaderBtn);
