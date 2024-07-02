@@ -62,7 +62,7 @@ const getNextInputId = (row, col) => {
     return getNextInputId(inputRow, inputCol);
   }
 
-  return el ? el.focus() : "";
+  return el ? el.focus() : -1;
 };
 
 // handle Tab button
@@ -75,14 +75,14 @@ const tabHandler = (event) => {
   }
 };
 
-//Input Handler
+//Get the Input Values and add to the matrix
 const handleChangeInputValue = (event) => {
   const { target, keyCode } = event;
   if (keyCode == 8 || keyCode == 9) return; //backspace and tab
   const row = target.id.charAt(0); //get the position
   const col = target.id.charAt(1); //get the position
   matrix[row][col] = parseInt(target.value);
-  return matrix;
+  return;
 };
 
 //Solver Button
