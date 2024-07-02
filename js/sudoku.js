@@ -142,10 +142,9 @@ const checkDuplicate = (
   colCheckingArray,
   blockCheckingArray
 ) => {
-  const row = parseInt(id.charAt(0));
-  const col = parseInt(id.charAt(1));
+  event.preventDefault();
   let inputElement = document.getElementById(id);
-  const { keyCode, target } = event;
+  const { target } = event;
   inputElement.classList.remove("duplicate"); // Reset style
   selectNum = parseInt(target.value.trim());
   if (selectNum === "0") {
@@ -157,7 +156,7 @@ const checkDuplicate = (
   let blockDuplicate = checkArray(blockCheckingArray, selectNum);
   if (rowDuplicate || colDuplicate || blockDuplicate) {
     // If duplicated
-    event.preventDefault();
+
     missCounter++;
     currentCounter();
     inputElement.classList.add("duplicate"); // Apply duplicate style
