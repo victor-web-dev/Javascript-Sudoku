@@ -225,42 +225,8 @@ const newGame = () => {
   levelButtonHandler();
 };
 
-//Create Table
-const createSudokuTable = () => {
-  //create buttons to choose level"
-  const div = createElement("div");
-  div.classList.add("button-container");
-  for (let idx = 0; idx < 3; idx++) {
-    const levelBtn = createElement("button");
-    levelBtn.classList.add("button-level");
-    levelBtn.classList.add("p-1");
-    switch (idx) {
-      case 0:
-        levelBtn.innerText = "EASY";
-        levelBtn.addEventListener("click", () => {
-          fillNum = 45;
-          newGame();
-        });
-        break;
-      case 1:
-        levelBtn.innerText = "NORMAL";
-        levelBtn.addEventListener("click", () => {
-          fillNum = 35;
-          newGame();
-        });
-        break;
-      case 2:
-        levelBtn.innerText = "HARD";
-        levelBtn.addEventListener("click", () => {
-          fillNum = 20;
-          newGame();
-        });
-        break;
-    }
-    div.append(levelBtn);
-  }
-  document.querySelector("main").appendChild(div);
-
+// Create Table for Sudoku
+const createTable = () => {
   const table = createElement("table");
   table.setAttribute("cellspacing", "0");
   table.setAttribute("cellpadding", "0");
@@ -355,9 +321,11 @@ const createSudokuTable = () => {
   }
   table.classList.add("table");
   table.append(tCaption, tHead, tBody);
-  document.querySelector("main").appendChild(table);
+  return table;
+};
 
-  //disply counter
+// Create Counter
+const createCounter = () => {
   const counterDiv = createElement("div");
   counterDiv.classList.add("counter-container");
   for (let idx = 0; idx < 2; idx++) {
@@ -375,7 +343,56 @@ const createSudokuTable = () => {
     }
     counterDiv.append(counterHeader);
   }
-  document.querySelector("main").appendChild(counterDiv);
+  return counterDiv;
+};
+
+// Create container with levels buttons
+const createLevels = () => {
+  //create buttons to choose level"
+  const div = createElement("div");
+  div.classList.add("button-container");
+  for (let idx = 0; idx < 3; idx++) {
+    const levelBtn = createElement("button");
+    levelBtn.classList.add("button-level");
+    levelBtn.classList.add("p-1");
+    switch (idx) {
+      case 0:
+        levelBtn.innerText = "EASY";
+        levelBtn.addEventListener("click", () => {
+          fillNum = 45;
+          newGame();
+        });
+        break;
+      case 1:
+        levelBtn.innerText = "NORMAL";
+        levelBtn.addEventListener("click", () => {
+          fillNum = 35;
+          newGame();
+        });
+        break;
+      case 2:
+        levelBtn.innerText = "HARD";
+        levelBtn.addEventListener("click", () => {
+          fillNum = 20;
+          newGame();
+        });
+        break;
+    }
+    div.append(levelBtn);
+  }
+  return div;
+};
+
+//Create Sudoku Table
+const createSudokuTable = () => {
+  //Button levels
+  const levelsDiv = createLevels();
+  //Table
+  const table = createTable();
+  //display counter
+  const counter = createCounter();
+
+  document.querySelector("main").append(levelsDiv, table, counter);
 };
 
 // Execute after HTML is loaded
