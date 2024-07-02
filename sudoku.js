@@ -42,8 +42,7 @@ const getInput = (i, j) => {
   return document.getElementById(`${i}${j}`);
 };
 
-// return next valid input and focus
-// recursive
+// recursively return next valid input and focus
 const getNextInputId = (row, col) => {
   let inputRow = row;
   let inputCol = col + 1;
@@ -60,7 +59,7 @@ const getNextInputId = (row, col) => {
   }
 
   if (el.disabled) {
-    return getNext(inputRow, inputCol);
+    return getNextInputId(inputRow, inputCol);
   }
 
   return el ? el.focus() : "";
