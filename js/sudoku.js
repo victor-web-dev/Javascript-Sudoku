@@ -124,7 +124,6 @@ const getKeyNumbers = () => {
 const currentCounter = () => {
   const missH2 = document.querySelector(".miss-counter");
   const hintH2 = document.querySelector(".hint-counter");
-  console.log(missCounter);
   missH2.innerText = `MISS COUNTER: ${missCounter}`;
   hintH2.innerText = `HINT COUNTER: ${hintCounter}`;
 };
