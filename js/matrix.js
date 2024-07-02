@@ -1,6 +1,6 @@
-const getBlockIndex = (i, j) => {
-  return Math.floor((i - 1) / 3) * 3 + Math.floor((j - 1) / 3);
-};
+// const getBlockIndex = (i, j) => {
+//   return Math.floor((i - 1) / 3) * 3 + Math.floor((j - 1) / 3);
+// };
 
 const isValid = (board, row, col, num) => {
   // Check if 'num' is not in current row, current column and current 3x3 sub-box
@@ -24,7 +24,7 @@ const fillBoard = (board) => {
     for (let col = 0; col < 9; col++) {
       if (board[row][col] == 0) {
         //if it is filled 0
-        // let nums = shuffleArray([...Array(9).keys()].map(n => n + 1)); // Shuffle numbers 1 to 9
+        // Shuffle numbers 1 to 9
         let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         nums = shuffleArray(nums);
         for (let num of nums) {
@@ -77,7 +77,7 @@ const diagonal = (array) => {
       }
     }
   }
-  console.log("diagonal: " + diagonal);
+  return "diagonal: " + diagonal;
 };
 
 // get the anti diagonal of the matrix
@@ -89,7 +89,7 @@ const antiDiagonal = (array) => {
       break;
     }
   }
-  console.log("anti-diagonal: " + antiDiagonal);
+  return "anti-diagonal: " + antiDiagonal;
 };
 
 //get all values of a row
@@ -126,9 +126,6 @@ const getBlocksPositions = (array) => {
     if (tempArr.length > 1) blocksPositions.push(tempArr);
   }
 
-  //   console.log("block: " + block);
-  // console.log(blocksPositions);
-  //   console.log(blocksPositions[0][1]);
   return blocksPositions;
 };
 
@@ -141,7 +138,6 @@ const block = (array, row = 0, col = 0) => {
       block.push(array[i][j]);
     }
   }
-  // console.log(block);
   return block;
 };
 
@@ -163,17 +159,3 @@ export const getAllBlocks = (array) => {
   }
   return obj;
 };
-
-// diagonal(arr);
-// antiDiagonal(arr);
-// rowValues(arr, 4);
-// colValues(arr, 8);
-// getBlocksPositions(arr);
-
-// block(arr, 0, 1);
-// let arr = generateSudoku();
-
-// console.table(arr);
-// colValues(arr);
-
-// let elements = getAllBlocks(arr);
