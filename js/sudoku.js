@@ -268,11 +268,11 @@ const createTable = () => {
   for (let idx = 0; idx < 3; idx++) {
     const tHeader = createElement("th");
     const tHeaderBtn = createElement("button");
-    tHeaderBtn.classList.add("button-primary");
+    tHeaderBtn.classList = "button-primary p-1 text-nowrap";
     tHeaderBtn.innerText = textarray[idx];
     tHeader.setAttribute("colspan", 3);
     tHeader.classList.add("p-1");
-    tHeaderBtn.classList.add("p-1");
+
     switch (idx) {
       case 0: //answer
         tHeaderBtn.addEventListener("click", solveSudoku);
